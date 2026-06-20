@@ -1,15 +1,45 @@
 import yfinance as yf
 import pandas as pd
+import matplotlib.pyplot as plt
+
+
+def download_stock_data(ticker, period="1y"):
+    data = yf.download(ticker, period=period)
+    return data
+
+
+def show_basic_info(data):
+    print("\nFirst 5 Rows:")
+    print(data.head())
+
+    print("\nLast 5 Rows:")
+    print(data.tail())
+
+    print("\nShape:")
+    print(data.shape)
+
+
+def plot_stock_price(data, ticker):
+    plt.figure(figsize=(12, 6))
+
+    plt.plot(data["Close"])
+
+    plt.title(f"{ticker} Closing Price")
+
+    plt.xlabel("Date")
+
+    plt.ylabel("Price (INR)")
+
+    plt.grid(True)
+
+    plt.show()
+
 
 ticker = "RELIANCE.NS"
 
-data = yf.download(ticker, period="1y")
+data = download_stock_data(ticker)
 
-print("First 5 Rows:")
-print(data.head())
+show_basic_info(data)
 
-print("\nLast 5 Rows:")
-print(data.tail())
+plot_stock_price(data, ticker)
 
-print("\nShape of Data:")
-print(data.shape)
